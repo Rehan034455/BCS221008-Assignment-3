@@ -1,45 +1,79 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 
 using namespace std;
 
-class Student {
+// Base class Shape
+class Shape {
+protected:
+    string color;
+
 public:
-    string name;
-    int roll_number;
-    float marks;
-
-    // Function to input student data
-    void input() {
-        cout << "Enter name: ";
-        cin >> name;
-        cout << "Enter roll number: ";
-        cin >> roll_number;
-        cout << "Enter marks: ";
-        cin >> marks;
+    // Constructor for Shape class
+    Shape(string col) : color(col) {
+        cout << "Creating a shape with color: " << color << endl;
     }
 
-    // Function to display student data
-    void display() const {
-        cout << "Name: " << name << ", Roll Number: " << roll_number << ", Marks: " << marks << endl;
+    // Function to set color
+    void setColor(string col) {
+        color = col;
     }
 
-    // Function to write student data to file
-    void writeToFile(ofstream &out) const {
-        out << name << " " << roll_number << " " << marks << endl;
+    // Function to get color
+    string getColor() const {
+        return color;
+    }
+};
+
+// Derived class Rectangle inheriting from Shape
+class Rectangle : public Shape {
+private:
+    float length;
+    float breadth;
+
+public:
+    // Constructor for Rectangle class
+    Rectangle(string col, float len, float brd) : Shape(col), length(len), breadth(brd) {
+        cout << "Creating a rectangle with length: " << length << " and breadth: " << breadth << endl;
     }
 
-    // Function to read student data from file
-    void readFromFile(ifstream &in) {
-        in >> name >> roll_number >> marks;
+    // Function to calculate area
+    float calculateArea() const {
+        return length * breadth;
+    }
+
+    // Function to calculate perimeter
+    float calculatePerimeter() const {
+        return 2 * (length + breadth);
+    }
+
+    // Function to display rectangle details
+    void displayDetails() const {
+        cout << "\nRectangle Details:\n";
+        cout << "Color: " << getColor() << endl;
+        cout << "Length: " << length << ", Breadth: " << breadth << endl;
+        cout << "Area: " << calculateArea() << endl;
+        cout << "Perimeter: " << calculatePerimeter() << endl;
     }
 };
 
 int main() {
-    const int studentCount = 5;
-    Student students[studentCount];
+    string color;
+    float length, breadth;
 
-    // Input student data
-    for (int i = 0; i < studentCount; i++) {
-        cout << "Enter details
+    // Getting user input
+    cout << "Enter the color of the rectangle: ";
+    cin >> color;
+    cout << "Enter the length of the rectangle: ";
+    cin >> length;
+    cout << "Enter the breadth of the rectangle: ";
+    cin >> breadth;
+
+    // Creating an object of Rectangle and demonstrating constructor chaining
+    Rectangle rect(color, length, breadth);
+
+    // Display rectangle details
+    rect.displayDetails();
+
+    return 0;
+}
